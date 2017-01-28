@@ -22,12 +22,52 @@ trait Pagination
     abstract protected function safeDeserialize(ResponseInterface $response, $className);
 
     /**
+     * @param mixed $response
+     *
+     * @return mixed|null
+     */
+    public function getPaginationNext($response)
+    {
+        return $this->getPaginationUrl($response->getNextUrl(), get_class($response));
+    }
+
+    /**
+     * @param mixed $response
+     *
+     * @return mixed|null
+     */
+    public function getPaginationPrevious($response)
+    {
+        return $this->getPaginationUrl($response->getPreviousUrl(), get_class($response));
+    }
+
+    /**
+     * @param mixed $response
+     *
+     * @return mixed|null
+     */
+    public function getPaginationFirst($response)
+    {
+        return $this->getPaginationUrl($response->getFirstUrl(), get_class($response));
+    }
+
+    /**
+     * @param mixed $response
+     *
+     * @return mixed|null
+     */
+    public function getPaginationLast($response)
+    {
+        return $this->getPaginationUrl($response->getLastUrl(), get_class($response));
+    }
+
+    /**
      * @param string $url
      * @param string $class
      *
      * @return mixed|null
      */
-    public function getPaginationUrl($url, $class)
+    private function getPaginationUrl($url, $class)
     {
         Assert::stringNotEmpty($class);
 
